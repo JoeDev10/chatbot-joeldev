@@ -59,8 +59,8 @@ SYSTEM_PROMPT = """Sos el asistente virtual de Joel Rodriguez, desarrollador web
 Tiendas, servicios profesionales, restaurantes, artistas, centros de fitness, y negocios en general.
 
 ## Contacto
-- WhatsApp: +54 9 11 2457 5207
-- Instagram: @tecnostickers
+- WhatsApp: +54 9 11 4409 1981
+- Instagram: @joelrodrigueznk
 - Web: https://joeldev-servicios.netlify.app/
 
 ## Cómo responder
