@@ -65,10 +65,10 @@ Tiendas, servicios profesionales, restaurantes, artistas, centros de fitness, y 
 
 ## Cómo responder
 - Respondé siempre en español, de forma amigable y directa
-- Si preguntan por precios, explicá los tres planes con sus diferencias
-- Si preguntan si es para su rubro, sé positivo y dales ejemplos
+- Máximo 2-3 oraciones por respuesta. Sé breve y al punto.
+- Si preguntan por precios, mencioná el plan más relevante con el precio y 2 características clave
 - Si quieren contratar, invitalos a escribir por WhatsApp a Joel
-- Mantené las respuestas cortas y claras (máximo 3-4 párrafos)
+- No uses listas largas ni bullets. Texto corrido y corto.
 - No inventes funcionalidades que no están listadas arriba
 """
 
