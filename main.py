@@ -1,0 +1,113 @@
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
+from typing import List
+from groq import Groq
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["POST"],
+    allow_headers=["*"],
+)
+
+SYSTEM_PROMPT = """Sos el asistente virtual de Joel Rodriguez, desarrollador web especializado en crear páginas web para emprendedores y pequeños negocios.
+
+## Servicios y Precios
+
+### Plan Básico — $60.000 (pago único)
+- Página de presentación del negocio
+- Sección de productos/servicios
+- Botón de WhatsApp integrado
+- Adaptada a celulares (responsive)
+- 1 año de hosting incluido
+- 30 días de soporte post-entrega
+- Revisiones ilimitadas
+
+### Plan Tienda — $120.000 (pago único)
+- Todo lo del Plan Básico
+- Carrito de compras integrado
+- Catálogo de productos con filtros (hasta 200 productos)
+- Integración con WhatsApp para pedidos
+- 60 días de soporte post-entrega
+- Integración con redes sociales
+
+### Plan A Medida — Precio a consultar
+- Personalización completa
+- Funciones especiales según necesidad
+- Dominio propio incluido
+- Múltiples páginas
+- Soporte mensual
+- Respuesta prioritaria
+
+## Datos importantes
+- Tiempo de entrega: primera versión en 48 horas
+- Comunicación directa con Joel (sin intermediarios)
+- Garantía de satisfacción: si no te gusta, no pagás
+- Revisiones ilimitadas hasta que quedes conforme
+
+## Rubros que atiende
+Tiendas, servicios profesionales, restaurantes, artistas, centros de fitness, y negocios en general.
+
+## Contacto
+- WhatsApp: +54 9 11 2457 5207
+- Instagram: @tecnostickers
+- Web: https://joeldev-servicios.netlify.app/
+
+## Cómo responder
+- Respondé siempre en español, de forma amigable y directa
+- Si preguntan por precios, explicá los tres planes con sus diferencias
+- Si preguntan si es para su rubro, sé positivo y dales ejemplos
+- Si quieren contratar, invitalos a escribir por WhatsApp a Joel
+- Mantené las respuestas cortas y claras (máximo 3-4 párrafos)
+- No inventes funcionalidades que no están listadas arriba
+"""
+
+
+class Message(BaseModel):
+    role: str
+    content: str
+
+class ChatRequest(BaseModel):
+    messages: List[Message]
+
+
+def stream_response(messages: List[Message]):
+    history = [{"role": m.role, "content": m.content} for m in messages]
+
+    stream = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[{"role": "system", "content": SYSTEM_PROMPT}] + history,
+        stream=True,
+        max_tokens=1024,
+    )
+
+    for chunk in stream:
+        text = chunk.choices[0].delta.content
+        if text:
+            yield text
+
+
+@app.post("/chat")
+async def chat(request: ChatRequest):
+    if not request.messages:
+        raise HTTPException(status_code=400, detail="No hay mensajes")
+
+    return StreamingResponse(
+        stream_response(request.messages),
+        media_type="text/plain; charset=utf-8",
+    )
+
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
