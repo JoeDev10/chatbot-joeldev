@@ -24,7 +24,7 @@ SYSTEM_PROMPT = """Sos el asistente virtual de Joel Rodriguez, desarrollador web
 
 ## Servicios y Precios
 
-### Plan Básico — $150.000 (pago único)
+### Plan Básico — $149.000 (pago único) ~~antes $200.000~~
 - Página de presentación del negocio
 - Sección de productos/servicios
 - Botón de WhatsApp integrado
@@ -32,7 +32,7 @@ SYSTEM_PROMPT = """Sos el asistente virtual de Joel Rodriguez, desarrollador web
 - 1 año de hosting incluido
 - 30 días de soporte post-entrega
 
-### Plan Tienda — $350.000 (pago único)
+### Plan Tienda — $339.000 (pago único) ~~antes $450.000~~
 - Todo lo del Plan Básico
 - Carrito de compras integrado
 - Catálogo de productos con filtros (hasta 200 productos)
@@ -40,7 +40,7 @@ SYSTEM_PROMPT = """Sos el asistente virtual de Joel Rodriguez, desarrollador web
 - 60 días de soporte post-entrega
 - Integración con redes sociales
 
-### Plan A Medida — Desde $600.000
+### Plan A Medida — Desde $589.000 ~~antes $800.000~~
 - Personalización completa
 - Funciones especiales según necesidad
 - Dominio propio incluido
